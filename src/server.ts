@@ -2,8 +2,9 @@ import app from "./app.js";
 import { pool } from "./DB/Db.js";
 const main = async () => {
   try {
-    await pool.getConnection(); // ✅ throws immediately if DB is unreachable
+    const conn = await pool.getConnection();
     console.log("DB connected");
+    conn.release();
     app.listen(3000, () => {
       console.log("Server is Running on Port 3000");
     });
@@ -13,4 +14,4 @@ const main = async () => {
   }
 };
 
-main()
+main();
