@@ -23,14 +23,16 @@ export const login = async (req: Request, res: Response) => {
       message: "Invaild Email Password",
     });
   }
-  console.log(user?.id);
 
-  await authService.setRefreshToken(
-    Number(user?.id),
-    generateRefreshToken(Number(user?.id)),
-  );
-
-  
+  const RefreshToken = generateRefreshToken(Number(user?.id));
+  const AcessToken = generateAcessToken(Number(user?.id), user?.email!);
+  await authService.setRefreshToken(Number(user?.id), RefreshToken);
+  res.cookie("acessToken", AcessToken, {
+    signed: true, //Create Signed Cookie / and Detect Tempering
+    httpOnly: true, // Prevents JavaScript access
+    secure: true,
+    sameSite: "strict",
+  });
   res.status(200).json({
     message: "Login Sucessfull",
     data: user,

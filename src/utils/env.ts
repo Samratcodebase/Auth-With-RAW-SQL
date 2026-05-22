@@ -14,6 +14,7 @@ const EnvSchema = z.object({
   DB_NAME: z.string().min(1),
 
   DB_PORT: z.coerce.number(),
+  COOKIE_PARSER_SECRECT: z.string(),
 });
 
 const loadENV = () => {
