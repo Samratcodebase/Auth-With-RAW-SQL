@@ -1,7 +1,7 @@
 import { pool } from "../DB/Db.js";
 import type {  ResultSetHeader } from "mysql2/promise";
-import type { RegisterInput, LoginInput } from "../types/auth.types.js";
-import type { User } from "../types/db.types.js";
+import type { RegisterInput, LoginInput } from "../types/auth.js";
+import type { User } from "../types/token.js";
 export class AuthRepositories {
   async create({ email, password }: RegisterInput) {
     const [rows] = await pool.execute<ResultSetHeader>(

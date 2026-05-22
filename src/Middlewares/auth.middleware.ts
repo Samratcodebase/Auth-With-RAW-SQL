@@ -15,7 +15,6 @@ export const validateUser = (
 ) => {
   try {
     const token = req.signedCookies.acessToken;
-    console.log("User ka Token", token);
 
     if (!token) {
       res.status(401).json({
@@ -27,8 +26,8 @@ export const validateUser = (
       token,
       ENV.JWT_SECRET_KEY,
     ) as TokenPayload;
-    console.log(decoded.id);
 
+    req.userID = decoded.id;
     next();
   } catch (error) {
     console.log("Error IN Validate Middleware", error);

@@ -1,6 +1,6 @@
-import type { LoginInput, RegisterInput } from "../types/auth.types.js";
+import type { LoginInput, RegisterInput } from "../types/auth.js";
 import { Auth } from "../Repositories/auth.repositories.js";
-import type { User } from "../types/db.types.js";
+
 
 const register = async ({ email, password }: RegisterInput) => {
   const user = await Auth.create({ email, password });
