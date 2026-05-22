@@ -19,4 +19,14 @@ export class AuthRepositories {
 
     return rows;
   }
+
+  setRefreshToken = async (id: number, token: string) => {
+    const [rows] = await pool.execute(
+      "UPDATE user SET refresh_token = ? WHERE id=? ",
+      [token, id],
+    );
+    return rows;
+  };
 }
+
+export const Auth = new AuthRepositories();
