@@ -1,5 +1,5 @@
 import { pool } from "../DB/Db.js";
-import type { RowDataPacket, ResultSetHeader } from "mysql2/promise";
+import type {  ResultSetHeader } from "mysql2/promise";
 import type { RegisterInput, LoginInput } from "../types/auth.types.js";
 import type { User } from "../types/db.types.js";
 export class AuthRepositories {
@@ -21,7 +21,7 @@ export class AuthRepositories {
   }
 
   setRefreshToken = async (id: number, token: string) => {
-    const [rows] = await pool.execute(
+    const [rows] = await pool.execute<ResultSetHeader>(
       "UPDATE user SET refresh_token = ? WHERE id=? ",
       [token, id],
     );
