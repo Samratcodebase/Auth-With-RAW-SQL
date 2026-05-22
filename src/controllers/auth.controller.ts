@@ -10,3 +10,14 @@ export const register = async (req: Request, res: Response) => {
     user: user,
   });
 };
+
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const user = await authService.login({ email, password });
+
+  res.status(200).json({
+    message: "Login Sucessfull",
+    data: user,
+  });
+};

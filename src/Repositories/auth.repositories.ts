@@ -1,11 +1,22 @@
 import { pool } from "../DB/Db.js";
-import type { RegisterInput } from "../types/auth.types.js";
+import type { RowDataPacket, ResultSetHeader } from "mysql2/promise";
+import type { RegisterInput, LoginInput } from "../types/auth.types.js";
+import type { User } from "../types/db.types.js";
 export class AuthRepositories {
   async create({ email, password }: RegisterInput) {
-    const [rows] = await pool.execute(
+    const [rows] = await pool.execute<ResultSetHeader>(
       "INSERT INTO user (email, password) VALUES (?, ?)",
       [email, password],
     );
+    return rows;
+  }
+
+  async login({ email, password }: LoginInput) {
+    const [rows] = await pool.execute<User[]>(
+      "SELECT * FROM user WHERE email = ? AND password = ?",
+      [email, password],
+    );
+
     return rows;
   }
 }
