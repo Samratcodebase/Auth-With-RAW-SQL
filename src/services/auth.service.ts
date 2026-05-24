@@ -1,7 +1,6 @@
 import type { LoginInput, RegisterInput } from "../types/auth.js";
 import { Auth } from "../Repositories/auth.repositories.js";
 
-
 const register = async ({ email, password }: RegisterInput) => {
   const user = await Auth.create({ email, password });
 
@@ -22,8 +21,13 @@ const setRefreshToken = async (id: number, token: string) => {
     return user;
   } catch (error) {}
 };
+
+const getRefreshToken = async (id: number) => {
+  return await Auth.getRefreshToken(id);
+};
 export default {
   register,
   login,
   setRefreshToken,
+  getRefreshToken,
 };

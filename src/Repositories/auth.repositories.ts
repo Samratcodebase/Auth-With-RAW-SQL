@@ -1,5 +1,5 @@
 import { pool } from "../DB/Db.js";
-import type {  ResultSetHeader } from "mysql2/promise";
+import type { ResultSetHeader } from "mysql2/promise";
 import type { RegisterInput, LoginInput } from "../types/auth.js";
 import type { User } from "../types/token.js";
 export class AuthRepositories {
@@ -26,6 +26,14 @@ export class AuthRepositories {
       [token, id],
     );
     return rows;
+  };
+  getRefreshToken = async (id: number) => {
+    const [rows] = await pool.execute<User[]>(
+      "SELECT refresh_token FROM user WHERE id = ?",
+      [id],
+    );
+
+    return rows[0];
   };
 }
 

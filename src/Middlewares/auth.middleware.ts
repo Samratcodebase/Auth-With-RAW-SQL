@@ -1,12 +1,8 @@
 import jwt from "jsonwebtoken";
-import type { JwtPayload } from "jsonwebtoken";
+
 import type { Request, Response, NextFunction } from "express";
 import { ENV } from "../utils/env.js";
-
-interface TokenPayload extends JwtPayload {
-  id: number;
-  email: string;
-}
+import type { MyJwtPayload } from "../utils/token.js";
 
 export const validateUser = (
   req: Request,
@@ -22,12 +18,10 @@ export const validateUser = (
       });
     }
 
-    const decoded: TokenPayload = jwt.verify(
-      token,
-      ENV.JWT_SECRET_KEY,
-    ) as TokenPayload;
+    const decoded = jwt.verify(token, ENV.JWT_SECRET_KEY) as MyJwtPayload;
+    console.log("decoded.id", decoded.userId);
 
-    req.userID = decoded.id;
+    req.userID = decoded.userId;
     next();
   } catch (error) {
     console.log("Error IN Validate Middleware", error);
